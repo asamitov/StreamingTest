@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StreamingServer", "StreamingServer.vcxproj", "{D471BC82-2375-4FE6-A44B-2CD5DC802B6A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StreamingClient", "StreamingClient.vcxproj", "{9287B600-C3B7-4699-87C0-4D6D2FC807CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D471BC82-2375-4FE6-A44B-2CD5DC802B6A}.Debug|x64.ActiveCfg = Debug|x64
+		{D471BC82-2375-4FE6-A44B-2CD5DC802B6A}.Debug|x64.Build.0 = Debug|x64
+		{D471BC82-2375-4FE6-A44B-2CD5DC802B6A}.Release|x64.ActiveCfg = Release|x64
+		{D471BC82-2375-4FE6-A44B-2CD5DC802B6A}.Release|x64.Build.0 = Release|x64
+		{9287B600-C3B7-4699-87C0-4D6D2FC807CC}.Debug|x64.ActiveCfg = Debug|x64
+		{9287B600-C3B7-4699-87C0-4D6D2FC807CC}.Debug|x64.Build.0 = Debug|x64
+		{9287B600-C3B7-4699-87C0-4D6D2FC807CC}.Release|x64.ActiveCfg = Release|x64
+		{9287B600-C3B7-4699-87C0-4D6D2FC807CC}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {116978BA-569F-41D2-90A6-A89651F81A29}
+	EndGlobalSection
+EndGlobal
