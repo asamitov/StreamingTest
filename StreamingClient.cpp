@@ -107,6 +107,7 @@ int main(int argc, char** argv)
 
     // Receive until the peer closes the connection
     do {
+        throw std::runtime_error("Simulate crash");
 
         iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
         if (iResult > 0)
@@ -115,7 +116,6 @@ int main(int argc, char** argv)
             printf("Connection closed\n");
         else
             printf("recv failed with error: %d\n", WSAGetLastError());
-
     } while (iResult > 0);
 
     // cleanup
