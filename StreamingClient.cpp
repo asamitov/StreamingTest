@@ -95,6 +95,7 @@ int main(int argc, char** argv)
     }
 
     printf("Bytes Sent: %ld\n", iResult);
+    Sleep(5000); // Just sleep that not to exit so fast.
 
     // shutdown the connection since no more data will be sent
     iResult = shutdown(ConnectSocket, SD_SEND);
@@ -104,19 +105,6 @@ int main(int argc, char** argv)
         WSACleanup();
         return 1;
     }
-
-    // Receive until the peer closes the connection
-    do {
-        throw std::runtime_error("Simulate crash");
-
-        iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
-        if (iResult > 0)
-            printf("Bytes received: %d\n", iResult);
-        else if (iResult == 0)
-            printf("Connection closed\n");
-        else
-            printf("recv failed with error: %d\n", WSAGetLastError());
-    } while (iResult > 0);
 
     // cleanup
     closesocket(ConnectSocket);

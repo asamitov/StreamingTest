@@ -9,6 +9,8 @@
 #include <cstdlib>
 #include <cstdio>
 #include <iostream>
+#include <thread>
+#include <atomic>
 
 #pragma comment (lib, "Ws2_32.lib")
 
@@ -94,6 +96,8 @@ int main()
         return 1;
     }
 
+    printf("establish connection\n");
+
     // No longer need server socket
     closesocket(ListenSocket);
 
@@ -106,18 +110,28 @@ int main()
     const DWORD keepalive_strobe_interval_secs = 1;
     setsockopt(ClientSocket, IPPROTO_TCP, TCP_KEEPINTVL, reinterpret_cast<const char*>(&keepalive_strobe_interval_secs), sizeof(keepalive_strobe_interval_secs));
 
+    WSAEVENT NewEvent = WSACreateEvent();
+    WSAEventSelect(ClientSocket, NewEvent, FD_CLOSE);
+
+    std::atomic<bool> connected{ true };
+    std::thread th([&]() {
+        DWORD Event;
+        if ((Event = WSAWaitForMultipleEvents(1, &NewEvent, FALSE, WSA_INFINITE, FALSE)) == WSA_WAIT_FAILED)
+            printf("WSAWaitForMultipleEvents() failed with error %d\n", WSAGetLastError());
+        else
+            printf("WSAWaitForMultipleEvents() close event!\n");
+
+        connected = false;
+    });
+
     WSAPOLLFD fdarray = { 0 };
     // Receive until the peer shuts down the connection
     do {
-        //Call WSAPoll for writeability on connecting socket
-        fdarray.fd = ClientSocket;
-        fdarray.events = POLLWRNORM;
+        printf("loop to send and receive data\n");
+        Sleep(1000);
+    } while (connected);
 
-        if (SOCKET_ERROR == (iResult = WSAPoll(&fdarray, 1, DEFAULT_WAIT))) {
-            ERR("WSAPoll");
-            break;
-        }
-    } while (true);
+    th.join();
 
     // shutdown the connection since we're done
     iResult = shutdown(ClientSocket, SD_SEND);
@@ -127,6 +141,8 @@ int main()
         WSACleanup();
         return 1;
     }
+
+    printf("shutdown\n");
 
     // cleanup
     closesocket(ClientSocket);
