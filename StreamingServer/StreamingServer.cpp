@@ -24,31 +24,22 @@
 
 int main()
 {
-    WSADATA wsaData;
-    int iResult;
-
-    SOCKET ListenSocket = INVALID_SOCKET;
-    SOCKET ClientSocket = INVALID_SOCKET;
-
-    struct addrinfo* result = nullptr;
-    struct addrinfo hints;
-
-    int recvbuflen = DEFAULT_BUFLEN;
-
     // Initialize Winsock
-    iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
+    WSADATA wsaData = {};
+    int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
     if (iResult != 0) {
         printf("WSAStartup failed with error: %d\n", iResult);
         return 1;
     }
 
-    ZeroMemory(&hints, sizeof(hints));
+    addrinfo hints = {};
     hints.ai_family = AF_INET;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_protocol = IPPROTO_TCP;
     hints.ai_flags = AI_PASSIVE;
 
     // Resolve the server address and port
+    addrinfo* result = nullptr;
     iResult = getaddrinfo(nullptr, DEFAULT_PORT, &hints, &result);
     if (iResult != 0) {
         printf("getaddrinfo failed with error: %d\n", iResult);
@@ -57,7 +48,7 @@ int main()
     }
 
     // Create a SOCKET for connecting to server
-    ListenSocket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
+    SOCKET ListenSocket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
     if (ListenSocket == INVALID_SOCKET) {
         printf("socket failed with error: %ld\n", WSAGetLastError());
         freeaddrinfo(result);
@@ -86,7 +77,7 @@ int main()
     }
 
     // Accept a client socket
-    ClientSocket = accept(ListenSocket, nullptr, nullptr);
+    SOCKET ClientSocket = accept(ListenSocket, nullptr, nullptr);
     if (ClientSocket == INVALID_SOCKET) {
         printf("accept failed with error: %d\n", WSAGetLastError());
         closesocket(ListenSocket);
