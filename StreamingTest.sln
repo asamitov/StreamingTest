@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StreamingServer", "StreamingServer.vcxproj", "{D471BC82-2375-4FE6-A44B-2CD5DC802B6A}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StreamingClient", "StreamingClient\StreamingClient.vcxproj", "{9287B600-C3B7-4699-87C0-4D6D2FC807CC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StreamingServer", "StreamingServer\StreamingServer.vcxproj", "{D471BC82-2375-4FE6-A44B-2CD5DC802B6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
