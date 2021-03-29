@@ -25,7 +25,6 @@ int main(int argc, char** argv)
         * ptr = nullptr,
         hints;
     const char* sendbuf = "this is a test";
-    char recvbuf[DEFAULT_BUFLEN];
     int iResult;
     int recvbuflen = DEFAULT_BUFLEN;
 
