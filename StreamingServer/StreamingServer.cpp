@@ -90,15 +90,6 @@ int main()
     // No longer need server socket
     closesocket(ListenSocket);
 
-    const BOOL keepalive = TRUE;
-    setsockopt(ClientSocket, SOL_SOCKET, SO_KEEPALIVE, reinterpret_cast<const char*>(&keepalive), sizeof(keepalive));
-    const DWORD num_keepalive_strobes = 1;
-    setsockopt(ClientSocket, IPPROTO_TCP, TCP_KEEPCNT, reinterpret_cast<const char*>(&num_keepalive_strobes), sizeof(num_keepalive_strobes));
-    const DWORD keepalive_idle_time_secs = 1;
-    setsockopt(ClientSocket, IPPROTO_TCP, TCP_KEEPIDLE, reinterpret_cast<const char*>(&keepalive_idle_time_secs), sizeof(keepalive_idle_time_secs));
-    const DWORD keepalive_strobe_interval_secs = 1;
-    setsockopt(ClientSocket, IPPROTO_TCP, TCP_KEEPINTVL, reinterpret_cast<const char*>(&keepalive_strobe_interval_secs), sizeof(keepalive_strobe_interval_secs));
-
     WSAEVENT NewEvent = WSACreateEvent();
     WSAEventSelect(ClientSocket, NewEvent, FD_CLOSE);
 
