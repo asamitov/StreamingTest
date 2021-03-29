@@ -93,25 +93,15 @@ int main()
     WSAEVENT NewEvent = WSACreateEvent();
     WSAEventSelect(ClientSocket, NewEvent, FD_CLOSE);
 
-    std::atomic<bool> connected{ true };
-    std::thread th([&]() {
-        DWORD Event;
-        if ((Event = WSAWaitForMultipleEvents(1, &NewEvent, FALSE, WSA_INFINITE, FALSE)) == WSA_WAIT_FAILED)
-            printf("WSAWaitForMultipleEvents() failed with error %d\n", WSAGetLastError());
-        else
-            printf("WSAWaitForMultipleEvents() close event!\n");
-
-        connected = false;
-    });
-
-    WSAPOLLFD fdarray = { 0 };
     // Receive until the peer shuts down the connection
     do {
         printf("loop to send and receive data\n");
-        Sleep(1000);
-    } while (connected);
-
-    th.join();
+        DWORD Event = WSAWaitForMultipleEvents(1, &NewEvent, FALSE, 1000, FALSE);
+        if (Event == WSA_WAIT_EVENT_0) {
+            printf("WSAWaitForMultipleEvents() close event!\n");
+            break;
+        }
+    } while (true);
 
     // shutdown the connection since we're done
     iResult = shutdown(ClientSocket, SD_SEND);
